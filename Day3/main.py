@@ -5,6 +5,8 @@ def main():
     print("Distance to closest intersection: ", result)
     result_part_two = findintersection_timesensitive(drawline(data[0]), drawline(data[1]))
     print("Lowest walking distance to an interception:", result_part_two)
+    print("hello there")
+    print("second hello there2")
 
 def readfromfile(filename):
     file = open(filename, "r")
