@@ -21,32 +21,27 @@ def drawline(linedata):
     for i in range(0, len(linedata)):
         direction = linedata[i][0]
         distance = linedata[i][1:]
-        steps = 0 #steps from start
-
-        if(str(current_x + j + 1) + "," + str(current_y) in linedata.keys()):
-            steps = linedata[str(current_x + j + 1) + "," + str(current_y)]
-            #print(steps)
 
         #based on direction mark all coordinates that a line passes
         #RIGHT
         if(direction == "R"):
             for j in range(0, (int(distance))):
-                coordinates.update({str(current_x+j+1)+","+str(current_y):steps+1})#add coordinates to dictionary 'coordinates'
+                coordinates.update({str(current_x+j+1)+","+str(current_y):1})#add coordinates to dictionary 'coordinates'
             current_x += int(distance)
         #LEFT
         if(direction == "L"):
             for j in range(0, (int(distance))):
-                coordinates.update({str(current_x-j-1)+","+str(current_y):steps+1})
+                coordinates.update({str(current_x-j-1)+","+str(current_y):1})
             current_x -= int(distance)
         #UP
         if(direction == "U"):
             for j in range(0, int(distance)):
-                coordinates.update({str(current_x)+","+str(current_y+j+1):steps+1})
+                coordinates.update({str(current_x)+","+str(current_y+j+1):1})
             current_y += int(distance)
         #DOWN
         if (direction == "D"):
             for j in range(0, int(distance)):
-                coordinates.update({str(current_x)+","+str(current_y - j - 1):steps+1})
+                coordinates.update({str(current_x)+","+str(current_y - j - 1):1})
             current_y -= int(distance)
     return(coordinates)
 
