@@ -1,12 +1,10 @@
 def main():
     #print(readfromfile("input"))
-    data = readfromfile("testing") #get 2 lines in 2d array
+    data = readfromfile("input") #get 2 lines in 2d array
     result = findintersection(drawline(data[0]), drawline(data[1])) #data[0] = first line, data[1] = second line
     print("Distance to closest intersection: ", result)
     result_part_two = findintersection_timesensitive(drawline(data[0]), drawline(data[1]))
     print("Lowest walking distance to an interception:", result_part_two)
-    print("hello there")
-    print("second hello there2")
 
 def readfromfile(filename):
     file = open(filename, "r")
@@ -36,8 +34,9 @@ def drawline(linedata):
                 key = str(current_x + j + 1) + "," + str(current_y)
                 #print("key",key)
                 if (key in coordinates.keys()):
-                    steps = coordinates[key]-1
-                coordinates.update({str(current_x+j+1)+","+str(current_y):steps+1})#add coordinates to dictionary 'coordinates'
+                    coordinates.update({str(current_x+j+1)+","+str(current_y):coordinates[key]})#add coordinates to dictionary 'coordinates'
+                else:
+                    coordinates.update({str(current_x + j + 1) + "," + str(current_y): steps + 1})
                 steps += 1
                 print(steps, key)
             current_x += int(distance)
@@ -48,8 +47,9 @@ def drawline(linedata):
                 key = str(current_x-j-1)+","+str(current_y)
                 #print("key", key)
                 if (key in coordinates.keys()):
-                    steps = coordinates[key]-1
-                coordinates.update({str(current_x-j-1)+","+str(current_y):steps+1})
+                    coordinates.update({str(current_x-j-1)+","+str(current_y):coordinates[key]})
+                else:
+                    coordinates.update({str(current_x - j - 1) + "," + str(current_y): steps + 1})
                 steps += 1
                 print(steps, key)
             current_x -= int(distance)
@@ -60,8 +60,9 @@ def drawline(linedata):
                 key = str(current_x)+","+str(current_y+j+1)
                 #print("key", key)
                 if (key in coordinates.keys()):
-                    steps = coordinates[key]-1
-                coordinates.update({str(current_x)+","+str(current_y+j+1):steps+1})
+                    coordinates.update({str(current_x)+","+str(current_y+j+1):coordinates[key]})
+                else:
+                    coordinates.update({str(current_x) + "," + str(current_y + j + 1): steps + 1})
                 steps += 1
                 print(steps, key)
             current_y += int(distance)
@@ -72,8 +73,9 @@ def drawline(linedata):
                 key = str(current_x)+","+str(current_y - j - 1)
                 #print("key", key)
                 if (key in coordinates.keys()):
-                    steps = coordinates[key]-1
-                coordinates.update({str(current_x)+","+str(current_y - j - 1):steps+1})
+                    coordinates.update({str(current_x)+","+str(current_y - j - 1):coordinates[key]})
+                else:
+                    coordinates.update({str(current_x) + "," + str(current_y - j - 1): steps + 1})
                 steps += 1
                 print(steps, key)
             current_y -= int(distance)
@@ -92,7 +94,7 @@ def findintersection(first, second):
         if(current_distance < closest and element in first.keys()): #if current distance is closer than closest and first line goes over coordinate (key) then intersection is closest
             closest = current_distance
             closest_coordinates = element
-            print("found a closer intersection", element)
+            #print("found a closer intersection", element)
     return closest
 
 ######### PART TWO #########
@@ -107,6 +109,6 @@ def findintersection_timesensitive(first, second):
             if(current_path_distance < closest_path_distance):
                 closest_path_distance = current_path_distance
                 closest_coordinates = element
-                print("found a intersection with closer path", closest_coordinates)
+                #print("found a intersection with closer path", closest_coordinates)
     return closest_path_distance
 main()
