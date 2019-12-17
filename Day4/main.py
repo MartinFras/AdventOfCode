@@ -20,11 +20,11 @@ def comparison(password):
     return password_numbers
 
 def checkpassword(password):
-    if(password[0] <= password[1]):
-        if(password[1] <= password[2]):
-            if (password[2] <= password[3]):
-                if (password[3] <= password[4]):
-                    if (password[4] <= password[5]):
+    if(password[5] >= password[4]):
+        if(password[4] >= password[3]):
+            if (password[3] >= password[2]):
+                if (password[2] >= password[1]):
+                    if (password[1] >= password[0]):
                         if(password[0] == password[1] or password[1] == password[2] or password[2] == password[3] or password[3] == password[4] or password[4] == password[5]):
                             return 1
                         return 0
