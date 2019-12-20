@@ -1,6 +1,6 @@
 def main():
-    filename = "test"
-    inputint = 3
+    filename = "input"
+    inputint = 1
     #print(readfromfile(filename))
 
     ######### PART ONE #########
@@ -23,30 +23,57 @@ def readfromfile(filename):
 def intcode(code, inputint):
     i = 0
     while(i < len(code)):
+        parameter_opcode = str(code[i])
+
+        if(len(parameter_opcode)>1):
+            opcode = parameter_opcode[-2:]
+            parameter_mode = parameter_opcode[0:-2]
+            parameter_mode = parameter_mode[::-1]
+            for j in range(3 - len(parameter_mode)):
+                parameter_mode += '0'
+        else:
+            opcode = parameter_opcode
+            parameter_mode = '000'
+        #print("par_mode:", parameter_mode)
         #addition
-        if(code[i] == '1'):
-            firstindex = int(code[i+1])
-            secondindex = int(code[i+2])
+        if(opcode == '01' or opcode == '1'):
+            if(parameter_mode[0] == '1'):
+                firstindex = i+1
+            else:
+                firstindex = int(code[i+1])
+            if(parameter_mode[1] == '1'):
+                secondindex = i+2
+            else:
+                secondindex = int(code[i+2])
             sumindex = int(code[i+3])
             code[sumindex] = int(code[firstindex])+int(code[secondindex])
             i += 4
         #multiplication
-        elif(code[i] == '2'):
-            firstindex = int(code[i + 1])
-            secondindex = int(code[i + 2])
+        elif(opcode == '02' or opcode == '2'):
+            if (parameter_mode[0] == '1'):
+                firstindex = i + 1
+            else:
+                firstindex = int(code[i + 1])
+            if (parameter_mode[1] == '1'):
+                secondindex = i + 2
+            else:
+                secondindex = int(code[i + 2])
             sumindex = int(code[i + 3])
             code[sumindex] = int(code[firstindex]) * int(code[secondindex])
             i += 4
-        elif(code[i] == '3'):
+        elif(opcode == '03' or opcode == '3'):
             adress = int(code[i + 1])
             code[adress] = str(inputint)
             i += 2
-        elif(code[i] == '4'):
-            adress = int(code[i+1])
-            print("Opcode 4 output: ", code[adress])
+        elif(opcode == '04' or opcode == '4'):
+            if (parameter_mode[0] == '1'):
+                firstindex = i + 1
+            else:
+                firstindex = int(code[i + 1])
+            print("Opcode 4 output: ", code[firstindex])
             i += 2
         #stop reading intcode
-        elif(code[i] == '99'):
+        elif(opcode == '99'):
             print("Halting")
             return code
 
